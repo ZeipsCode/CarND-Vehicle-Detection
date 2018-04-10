@@ -30,17 +30,12 @@ The goals / steps of this project are the following:
 ---
 ### Writeup / README
 
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
-
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
-
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+The code for this step is contained in the 4th and 5th code cells of the IPython notebook. 
+I started by reading in all the `vehicle` and `non-vehicle` images in the 2nd code cell.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
@@ -53,23 +48,24 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I tried various combinations of parameters and settled on the combination of 11 orientation bins for the histogram, 16 pixels per cell and 2 cells per block. These parameters gave me a really good accuracy in the trained SVM, because as you can see in the example images i added, there is a clearly visible difference in car-features and non-car-features.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+I trained a linear SVM using only HOG features. You can find it in the 8th code cell of the IPython notebook.
 
 ### Sliding Window Search
 
-#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+#### 1. Describe how (and identify where in your code) you implemented a sliding window search. How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+I decided to slide the window horizontally over the whole image, so that the implemented function would work in different scenarios. Sliding it only from the middle to the right for example would only work if the car is driving in the right lane.
+I did however restrict it vertically to only search within the y-coordinates 400 and 620. By doing this i removed parts of the image where one would'nt expect a car (for example in the sky).
 
 ![alt text][image3]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+After experimenting a lot with different window scales i decided to use five different scales to give my classifier more images to work with and reduce the odds of getting false positives. I settled on the YUV color-channel and only used HOG features.
 
 ![alt text][image4]
 ---
@@ -104,5 +100,11 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+One obvious shortcoming of my implementation is the detection speed. Searching every single frame with the SVM for cars took about 10 minutes, which is about 2 frames per second.
+Another shortcoming is the detection accuracy. The pipeline does quite a good job with respect to eliminating false positives. The quality of the true positives however is adversely affected by the actions taken to eliminate the false positives.
+As you can see in the included video the detection probability falls with increasing distance because of the chosen parameters like the window scale.
+
+Using a deep learning approach like the YOLO neural network mentioned in the class would likely make the detection much more robust and fast. On the other hand it would take much more time and resources to train the neural net.
+
+
 
