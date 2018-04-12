@@ -15,13 +15,11 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
+[image1]: ./output_images/car_notcar.png
+[image2]: ./output_images/car.png
+[image5]: ./output_images/bboxes_and_heat.png
+[image6]: ./output_images/labels_map.png
+[image7]: ./output_images/output_bboxes.png
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -41,7 +39,7 @@ I started by reading in all the `vehicle` and `non-vehicle` images in the 2nd co
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Here is an example using the `YUV` color space and HOG parameters of `orientations=11`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`:
 
 
 ![alt text][image2]
@@ -61,14 +59,10 @@ I trained a linear SVM using only HOG features. You can find it in the 8th code 
 I decided to slide the window horizontally over the whole image, so that the implemented function would work in different scenarios. Sliding it only from the middle to the right for example would only work if the car is driving in the right lane.
 I did however restrict it vertically to only search within the y-coordinates 400 and 620. By doing this i removed parts of the image where one would'nt expect a car (for example in the sky).
 
-![alt text][image3]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 After experimenting a lot with different window scales i decided to use five different scales to give my classifier more images to work with and reduce the odds of getting false positives. I settled on the YUV color-channel and only used HOG features.
-
-![alt text][image4]
----
 
 ### Video Implementation
 
@@ -80,7 +74,7 @@ Here's a [link to my video result](./project_video.mp4)
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+Here's an example result showing the heatmap from a frame of the video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here are six frames and their corresponding heatmaps:
 
