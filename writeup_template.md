@@ -21,7 +21,7 @@ The goals / steps of this project are the following:
 [image5]: ./output_images/heatmap.png
 [image6]: ./output_images/threshold.png
 [image7]: ./output_images/result.png
-[video1]: ./project_video.mp4
+[video1]: ./output_images/output_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
