@@ -17,7 +17,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 [image1]: ./output_images/car_notcar.png
 [image2]: ./output_images/car.png
-[image5]: ./test_images/test1.jpg
+[image4]: ./test_images/test1.jpg
 [image5]: ./output_images/heatmap.png
 [image6]: ./output_images/threshold.png
 [image7]: ./output_images/result.png
@@ -78,6 +78,8 @@ I recorded the positions of positive detections in each frame of the video.  Fro
 Here's an example result showing the heatmap from a frame of the video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
 ### Here is one frame from the video and the corresponding heatmap:
+![alt text][image4]
+
 
 ![alt text][image5]
 
