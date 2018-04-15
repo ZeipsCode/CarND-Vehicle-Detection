@@ -59,6 +59,7 @@ I trained a linear SVM using only HOG features. You can find it in the 8th code 
 
 I decided to slide the window horizontally over the whole image, so that the implemented function would work in different scenarios. Sliding it only from the middle to the right for example would only work if the car is driving in the right lane.
 I did however restrict it vertically to only search within the y-coordinates 400 and 620. By doing this i removed parts of the image where one would'nt expect a car (for example in the sky).
+To detect the car if it is farther away i use six different scales of the image. By doing this the car can even be detected if it fills only a small part of the entire image, like a car in the distance. 
 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
@@ -73,7 +74,8 @@ Here's a [link to my video result](./output_images/output_video.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
+Do get a steadier detection and minimize false positives even further i am averageing over three images. 
 
 Here's an example result showing the heatmap from a frame of the video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
